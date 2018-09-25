@@ -12120,6 +12120,8 @@ percentage of dog files with a detected human face :  11  %
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Question 2:</strong> This algorithmic choice necessitates that we communicate to the user that we accept human images only when they provide a clear view of a face (otherwise, we risk having unneccessarily frustrated users!). In your opinion, is this a reasonable expectation to pose on the user? If not, can you think of a way to detect humans in images that does not necessitate an image with a clearly presented face?</p>
 <p><strong>Answer:</strong></p>
+<p>It's not reasonable to impose on the users to provide images with clear human faces on them, my suggestion would be to use a CNN trained with human faces images from different angles ( to extract faces even if they are not fully visible )</p>
+<p>As mentionned on the OpenCV website, Haar classifier is a machine learning classifier which means that the features are defined in the xml files provided on github, this is kind of limited when knowing that for a single face there are more features that can be detected but not mentionned on the xml base files, This is where the approach using Deep Learning becomes useful, We'll need a Model that detects by itself those features defining whether they define a face or not.</p>
 <p>We suggest the face detector from OpenCV as a potential way to detect human images in your algorithm, but you are free to explore other approaches, especially approaches that make use of deep learning :).  Please use the code cell below to design and test your own face detection algorithm.  If you decide to pursue this <em>optional</em> task, report performance on each of the datasets.</p>
 
 </div>
@@ -12463,7 +12465,19 @@ percentage of dog files with a detected dogs :  100  %
 <p><img src="images/sample_cnn.png" alt="Sample CNN"></p>
 <p><strong>Question 4:</strong> Outline the steps you took to get to your final CNN architecture and your reasoning at each step.  If you chose to use the hinted architecture above, describe why you think that CNN architecture should work well for the image classification task.</p>
 <p><strong>Answer:</strong></p>
-<p>I took a similar architecture to the one above and added 2 convolutional layers and 2 max pooling layers in order to extracat more features to differentiate between Dog breeds.</p>
+<p>I used  similar architecture as the CNN above with some modifications, I added two sets of convolutional and MaxPooling layers.
+For the first set:</p>
+<ul>
+<li>a convolutional layer with 128 filters, a kernel size of 2 and a relu activation function</li>
+<li>a max pooling layer with a pool size of 2</li>
+</ul>
+<p>The second Set follows the same logic:</p>
+<ul>
+<li>a convolutional layer with 256 filters, a kernel of 2 and a relu activation function</li>
+<li>a max pooling with a pool size of 2</li>
+</ul>
+<p>The goal of these two layers is to allow this CNN to extract more features to differentiate between the dog breeds. This architecture isn't the best to detect the dog breeds since later it shows an accuracy of 8% but it's the simplest way to enhance it from 1% and do better than random prediction.
+I could add a dropout layer to avoid overfitting but since I won't be using this architecture for my final dog detector I choose to stick with it for this part.</p>
 
 </div>
 </div>
